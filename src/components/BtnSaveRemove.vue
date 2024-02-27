@@ -1,5 +1,6 @@
 <script>
 export default {
+  emits: ["save", "remove"],
   data() {
     return {};
   },
