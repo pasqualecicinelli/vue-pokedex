@@ -1,6 +1,8 @@
 <script>
 import Search from "./components/Search.vue";
 import CardDetails from "./components/CardDetails.vue";
+import BtnSaveRemove from "./components/BtnSaveRemove.vue";
+import CardListPokemon from "./components/CardListPokemon.vue";
 
 export default {
   data() {
@@ -9,12 +11,22 @@ export default {
       baseUrl: "https://pokeapi.co/api/v2/pokemon/",
       pokemonDetails: null,
       errorMessage: null,
+      pokemonList: [],
     };
   },
 
   components: {
     Search,
     CardDetails,
+    BtnSaveRemove,
+    CardListPokemon,
+  },
+  mounted() {
+    // Recupera i dati da localStorage al caricamento del componente
+    const storedList = localStorage.getItem("pokeList");
+    if (storedList) {
+      this.pokemonList = JSON.parse(storedList); // Converte i dati da stringa JSON a array JavaScript
+    }
   },
 
   methods: {
@@ -89,6 +101,19 @@ export default {
         this.errorMessage = error.message;
       }
     },
+    async handleSave() {
+      if (!this.pokemonList.includes(this.pokemonDetails.name)) {
+        this.pokemonList.push(this.pokemonDetails.name);
+        localStorage.setItem("pokeList", JSON.stringify(this.pokemonList)); // Salva i dati come stringa JSON
+      }
+    },
+    async handlRemove(pokemonName) {
+      const index = this.pokemonList.indexOf(pokemonName);
+      if (index !== -1) {
+        this.pokemonList.splice(index, 1); // Rimuove il Pokémon dalla lista
+        localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
+      }
+    },
   },
 };
 </script>
@@ -99,10 +124,15 @@ export default {
   <main>
     <div class="container">
       <Search @pokemon-name="handlePokemonName" />
+      <BtnSaveRemove
+        @save="handleSave"
+        @remove="handlRemove(pokemonDetails.name)"
+      />
       <CardDetails
         :pokemonDetails="pokemonDetails"
         :errorMessage="errorMessage"
       />
+      <CardListPokemon :pokemonList="pokemonList" />
     </div>
   </main>
 </template>
