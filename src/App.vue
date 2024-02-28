@@ -82,12 +82,17 @@ export default {
       if (!this.pokemonList.includes(this.pokemonDetails.name)) {
         this.pokemonList.push(this.pokemonDetails.name);
         localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
+        this.searchTerm = "";
       } else {
         alert("Pokemon già catturato");
       }
+      this.pokemonDetails = null;
     },
     handleSelectPokemon(pokemonName) {
       this.selectedPokemon = pokemonName;
+      // this.searchTerm = pokemonName;
+      this.handlePokemonName(this.selectedPokemon);
+      // this.searchPokemon(this.searchTerm);
     },
     handleRemove() {
       if (this.selectedPokemon) {
@@ -96,6 +101,8 @@ export default {
           this.pokemonList.splice(index, 1);
           localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
           this.selectedPokemon = null; // Deseleziona il Pokémon dopo la rimozione
+          this.pokemonDetails = null; // Azzeramento dei dettagli del Pokémon
+          this.searchTerm = ""; // Reset della barra di ricerca
         }
       }
     },
