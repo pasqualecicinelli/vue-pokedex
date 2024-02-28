@@ -1,8 +1,11 @@
 <script>
+import { ref } from "vue";
 import Search from "./components/Search.vue";
 import CardDetails from "./components/CardDetails.vue";
 import BtnSaveRemove from "./components/BtnSaveRemove.vue";
 import CardListPokemon from "./components/CardListPokemon.vue";
+
+const searchTerm = ref("");
 
 export default {
   data() {
@@ -90,9 +93,8 @@ export default {
     },
     handleSelectPokemon(pokemonName) {
       this.selectedPokemon = pokemonName;
-      // this.searchTerm = pokemonName;
+      this.fromList = pokemonName;
       this.handlePokemonName(this.selectedPokemon);
-      // this.searchPokemon(this.searchTerm);
     },
     handleRemove() {
       if (this.selectedPokemon) {
@@ -112,12 +114,15 @@ export default {
 
 <template>
   <header>Pokedex</header>
-
+  <!-- <custom-text-input
+    v-model.no-whitespace="value"
+    v-model:fromList="fromList"
+  /> -->
   <main>
     <div class="container">
       <div class="row">
         <div class="col-6">
-          <Search @pokemon-name="handlePokemonName" />
+          <Search @update:searchTerm="handlePokemonName" v-model="searchTerm" />
           <BtnSaveRemove @save="handleSave" @remove="handleRemove" />
           <CardDetails
             :pokemonDetails="pokemonDetails"
