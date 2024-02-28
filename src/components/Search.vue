@@ -10,7 +10,7 @@ export default {
 
 <template>
   <main>
-    <div class="mt-5">
+    <div class="mt-5 d-flex">
       <input
         type="text"
         v-model="searchTerm"

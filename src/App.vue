@@ -108,16 +108,22 @@ export default {
 
   <main>
     <div class="container">
-      <Search @pokemon-name="handlePokemonName" />
-      <BtnSaveRemove @save="handleSave" @remove="handleRemove" />
-      <CardDetails
-        :pokemonDetails="pokemonDetails"
-        :errorMessage="errorMessage"
-      />
-      <CardListPokemon
-        :pokemonList="pokemonList"
-        @select="handleSelectPokemon"
-      />
+      <div class="row">
+        <div class="col-6">
+          <Search @pokemon-name="handlePokemonName" />
+          <BtnSaveRemove @save="handleSave" @remove="handleRemove" />
+          <CardDetails
+            :pokemonDetails="pokemonDetails"
+            :errorMessage="errorMessage"
+          />
+        </div>
+        <div class="col-6">
+          <CardListPokemon
+            :pokemonList="pokemonList"
+            @select="handleSelectPokemon"
+          />
+        </div>
+      </div>
     </div>
   </main>
 </template>
