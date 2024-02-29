@@ -37,10 +37,18 @@ const emitValue = (evt) => {
         :value="searchTerm || fromList"
         placeholder="Inserisci il nome del Pokémon"
         @keydown.enter="$emit('update:searchTerm', $event.target.value)"
+        @input="emitValue"
       />
+
       <button @click="$emit('update:searchTerm', $event.target.value)">
         Cerca
       </button>
+      <!-- <input
+        type="text"
+        placeholder="dalla lista salvata"
+        :value="fromList"
+        @input="emitValue"
+      /> -->
     </div>
   </main>
 </template>

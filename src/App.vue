@@ -16,6 +16,7 @@ export default {
       errorMessage: null,
       pokemonList: [],
       selectedPokemon: null,
+      fromList: null,
     };
   },
   components: {
@@ -85,11 +86,11 @@ export default {
       if (!this.pokemonList.includes(this.pokemonDetails.name)) {
         this.pokemonList.push(this.pokemonDetails.name);
         localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
-        this.searchTerm = "";
+        // this.searchTerm = "";
       } else {
         alert("Pokemon già catturato");
       }
-      this.pokemonDetails = null;
+      // this.pokemonDetails = null;
     },
     handleSelectPokemon(pokemonName) {
       this.selectedPokemon = pokemonName;
@@ -103,8 +104,8 @@ export default {
           this.pokemonList.splice(index, 1);
           localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
           this.selectedPokemon = null; // Deseleziona il Pokémon dopo la rimozione
-          this.pokemonDetails = null; // Azzeramento dei dettagli del Pokémon
-          this.searchTerm = ""; // Reset della barra di ricerca
+          // this.pokemonDetails = null; // Azzeramento dei dettagli del Pokémon
+          // this.searchTerm = ""; // Reset della barra di ricerca
         }
       }
     },
@@ -114,15 +115,16 @@ export default {
 
 <template>
   <header>Pokedex</header>
-  <!-- <custom-text-input
-    v-model.no-whitespace="value"
-    v-model:fromList="fromList"
-  /> -->
   <main>
     <div class="container">
       <div class="row">
         <div class="col-6">
-          <Search @update:searchTerm="handlePokemonName" v-model="searchTerm" />
+          <Search
+            custom-text-input
+            @update:searchTerm="handlePokemonName"
+            v-model="searchTerm"
+            v-model:fromList="fromList"
+          />
           <BtnSaveRemove @save="handleSave" @remove="handleRemove" />
           <CardDetails
             :pokemonDetails="pokemonDetails"
