@@ -48,7 +48,9 @@ export default {
           throw new Error("Pokémon non trovato!");
         }
         const data = await response.json();
-        const image = data.sprites ? data.sprites.front_default : null;
+        const imageFront = data.sprites ? data.sprites.front_default : null;
+        const imageBack = data.sprites ? data.sprites.back_default : null;
+
         const types = data.types
           ? data.types.map((type) => type.type.name)
           : [];
@@ -72,7 +74,8 @@ export default {
           height: data.height,
           weight: data.weight,
           types: types,
-          image: image,
+          imageFront: imageFront,
+          imageBack: imageBack,
           stats: stats,
         };
         this.errorMessage = null;

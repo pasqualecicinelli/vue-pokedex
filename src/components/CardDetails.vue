@@ -8,8 +8,24 @@ export default {
       type: String,
     },
   },
+  data() {
+    return {
+      intervalId: null,
+      showFrontImage: true,
+    };
+  },
+  mounted() {
+    // Avvia l'intervallo al montaggio del componente
+    this.intervalId = setInterval(() => {
+      // Cambia lo stato dell'immagine tra front e back
+      this.showFrontImage = !this.showFrontImage;
+    }, 2000); // Ogni due secondi (2000 millisecondi)
+  },
+  beforeDestroy() {
+    // Assicurati di cancellare l'intervallo prima di distruggere il componente
+    clearInterval(this.intervalId);
+  },
 };
-const scaleValue = 100;
 </script>
 
 <template>
@@ -17,9 +33,17 @@ const scaleValue = 100;
     <!-- Prima card con l'immagine -->
     <div class="card card-top">
       <img
+        v-if="showFrontImage"
         class="card-img-fluid"
-        :src="pokemonDetails.image"
-        alt="Pokemon Image"
+        :src="pokemonDetails.imageFront"
+        alt="Pokemon Image Front"
+      />
+
+      <img
+        v-else
+        class="card-img-fluid"
+        :src="pokemonDetails.imageBack"
+        alt="Pokemon Image Back"
       />
       <h2 class="mt-2">{{ pokemonDetails.name }}</h2>
     </div>
