@@ -1,8 +1,11 @@
 <script>
+import { ref } from "vue";
 import Search from "./components/Search.vue";
 import CardDetails from "./components/CardDetails.vue";
 import BtnSaveRemove from "./components/BtnSaveRemove.vue";
 import CardListPokemon from "./components/CardListPokemon.vue";
+
+const searchTerm = ref("");
 
 export default {
   data() {
@@ -13,6 +16,7 @@ export default {
       errorMessage: null,
       pokemonList: [],
       selectedPokemon: null,
+      fromList: null,
     };
   },
   components: {
@@ -44,7 +48,9 @@ export default {
           throw new Error("Pokémon non trovato!");
         }
         const data = await response.json();
-        const image = data.sprites ? data.sprites.front_default : null;
+        const imageFront = data.sprites ? data.sprites.front_default : null;
+        const imageBack = data.sprites ? data.sprites.back_default : null;
+
         const types = data.types
           ? data.types.map((type) => type.type.name)
           : [];
@@ -68,7 +74,8 @@ export default {
           height: data.height,
           weight: data.weight,
           types: types,
-          image: image,
+          imageFront: imageFront,
+          imageBack: imageBack,
           stats: stats,
         };
         this.errorMessage = null;
@@ -82,17 +89,16 @@ export default {
       if (!this.pokemonList.includes(this.pokemonDetails.name)) {
         this.pokemonList.push(this.pokemonDetails.name);
         localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
-        this.searchTerm = "";
+        // this.searchTerm = "";
       } else {
         alert("Pokemon già catturato");
       }
-      this.pokemonDetails = null;
+      // this.pokemonDetails = null;
     },
     handleSelectPokemon(pokemonName) {
       this.selectedPokemon = pokemonName;
-      // this.searchTerm = pokemonName;
+      this.fromList = pokemonName;
       this.handlePokemonName(this.selectedPokemon);
-      // this.searchPokemon(this.searchTerm);
     },
     handleRemove() {
       if (this.selectedPokemon) {
@@ -101,8 +107,8 @@ export default {
           this.pokemonList.splice(index, 1);
           localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
           this.selectedPokemon = null; // Deseleziona il Pokémon dopo la rimozione
-          this.pokemonDetails = null; // Azzeramento dei dettagli del Pokémon
-          this.searchTerm = ""; // Reset della barra di ricerca
+          // this.pokemonDetails = null; // Azzeramento dei dettagli del Pokémon
+          // this.searchTerm = ""; // Reset della barra di ricerca
         }
       }
     },
@@ -112,12 +118,16 @@ export default {
 
 <template>
   <header>Pokedex</header>
-
   <main>
     <div class="container">
       <div class="row">
         <div class="col-6">
-          <Search @pokemon-name="handlePokemonName" />
+          <Search
+            custom-text-input
+            @update:searchTerm="handlePokemonName"
+            v-model="searchTerm"
+            v-model:fromList="fromList"
+          />
           <BtnSaveRemove @save="handleSave" @remove="handleRemove" />
           <CardDetails
             :pokemonDetails="pokemonDetails"
