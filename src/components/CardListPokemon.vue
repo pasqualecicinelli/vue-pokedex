@@ -12,18 +12,23 @@ export default {
 </script>
 
 <template>
-  <ul>
+  <h2>I pokemon che hai catturato:</h2>
+  <ol class="pokemon-list">
     <li v-for="poke of pokemonList" :key="poke">
-      <span @click="selectPokemon(poke)">{{ poke }}</span>
+      <span class="pokemon-style" @click="selectPokemon(poke)">{{ poke }}</span>
     </li>
-  </ul>
+  </ol>
 </template>
 
 <style>
-ul {
-  list-style: none;
+.pokemon-list {
+  color: rgb(250, 232, 215);
 }
 li {
   cursor: pointer;
+  font-size: 1.5rem;
+}
+.pokemon-style {
+  color: black;
 }
 </style>

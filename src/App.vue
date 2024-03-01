@@ -114,10 +114,10 @@ export default {
 </script>
 
 <template>
-  <header>Pokedex</header>
+  <header></header>
   <main>
     <div class="container">
-      <div class="row">
+      <div class="row mt-5">
         <div class="col-6">
           <Search
             custom-text-input
@@ -150,9 +150,29 @@ export default {
 
 <style scoped>
 header {
-  height: 80px;
+  height: 200px;
   border: 1px solid black;
-  text-align: center;
-  line-height: 80px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-image: url("../public/pokemon-wrapper.jpg");
+  background-size: cover; /* Per garantire che l'immagine copra l'intero header */
+  background-position: center -507px;
+}
+
+.row {
+  min-height: 90vh;
+  background-color: rgb(255, 0, 0);
+  padding: 3rem;
+  border: 1rem solid rgb(201, 0, 1);
+  border-radius: 2rem;
+}
+
+.col-6:first-child {
+  border-right: 3px solid black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

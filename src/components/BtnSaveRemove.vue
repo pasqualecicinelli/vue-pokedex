@@ -18,11 +18,13 @@ export default {
 
 <template>
   <div class="d-flex">
-    <div class="m-2" v-if="!pokemonList.includes(searchTerm)">
-      <button @click="$emit('save')">Salva</button>
+    <div v-if="!pokemonList.includes(searchTerm)">
+      <button @click="$emit('save')" class="m-2 btn btn-success">Salva</button>
     </div>
-    <div class="m-2" v-else>
-      <button @click="$emit('remove')">Rimuovi</button>
+    <div v-else>
+      <button @click="$emit('remove')" class="m-2 btn btn-warning">
+        Rimuovi
+      </button>
     </div>
   </div>
 </template>
