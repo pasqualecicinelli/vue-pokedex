@@ -149,13 +149,13 @@ export default {
 }
 
 .card-top {
-  width: 18rem;
   text-align: center;
 }
 div.flex-center {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 1rem;
 }
 p {
   margin: 0;
@@ -163,7 +163,7 @@ p {
 }
 div.progression-bar {
   display: flex;
-  width: 100px;
+  width: 200px;
   height: 6px;
   border: 1px solid black;
 }

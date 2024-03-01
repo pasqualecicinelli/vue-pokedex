@@ -90,10 +90,7 @@ export default {
         this.pokemonList.push(this.pokemonDetails.name);
         localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
         // this.searchTerm = "";
-      } else {
-        alert("Pokemon già catturato");
       }
-      // this.pokemonDetails = null;
     },
     handleSelectPokemon(pokemonName) {
       this.selectedPokemon = pokemonName;
@@ -128,7 +125,13 @@ export default {
             v-model="searchTerm"
             v-model:fromList="fromList"
           />
-          <BtnSaveRemove @save="handleSave" @remove="handleRemove" />
+          <BtnSaveRemove
+            v-if="searchTerm !== null && pokemonDetails !== null"
+            @save="handleSave"
+            @remove="handleRemove"
+            :searchTerm="searchTerm"
+            :pokemonList="pokemonList"
+          />
           <CardDetails
             :pokemonDetails="pokemonDetails"
             :errorMessage="errorMessage"
