@@ -104,7 +104,7 @@ export default {
           this.pokemonList.splice(index, 1);
           localStorage.setItem("pokeList", JSON.stringify(this.pokemonList));
           this.selectedPokemon = null; // Deseleziona il Pokémon dopo la rimozione
-          // this.pokemonDetails = null; // Azzeramento dei dettagli del Pokémon
+          this.pokemonDetails = null; // Azzeramento dei dettagli del Pokémon
           // this.searchTerm = ""; // Reset della barra di ricerca
         }
       }
